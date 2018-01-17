@@ -16,5 +16,8 @@
     "nodemon": "^1.14.9",
     "pg": "^7.4.1",
     "serve-favicon": "~2.4.5"
+  },
+  "engines": {
+    "node": "4.1.1"
   }
 }
