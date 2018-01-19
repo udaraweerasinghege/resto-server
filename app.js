@@ -5,8 +5,10 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+
 const index = require('./routes/index');
-const restaurants = require('./routes/restaurants');
+const graphqlSchema = require('./routes/graphql');
 
 const app = express();
 
@@ -23,7 +25,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/restaurants', restaurants);
+
+app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: graphqlSchema }));
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
