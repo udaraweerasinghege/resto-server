@@ -17,16 +17,14 @@ const schema = buildSchema(`
   }
 `);
 
-// The root provides a resolver function for each API endpoint
 const root = {
-  restaurants: () => {
-    return db.any('SELECT * FROM restaurants')
-      .then((data) => {
-        return data;
-      })
-      .catch((error) => {
-        return error;
-      });
+  restaurants: async () => {
+    try {
+      return await db.any('SELECT * FROM restaurants');
+    } 
+    catch(e) {
+      throw(e);
+    }
   }
 };
 
@@ -35,17 +33,5 @@ router.use('/', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
-
-
-/* GET restos listing. */
-// router.get('/', (req, res, next) => {
-//   db.any('SELECT * FROM restaurants')
-//     .then((data) => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       next(err);
-//     }) 
-// });
 
 module.exports = router;
