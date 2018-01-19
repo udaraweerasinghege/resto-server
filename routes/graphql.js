@@ -11,7 +11,6 @@ const resolvers = {
     restaurants: async () => {
       try {
         res = await db.any('SELECT * FROM restaurants r LEFT JOIN comments c on r.id = c.restaurant_id');
-        console.log(res[0]);
         return res;
       } 
       catch(e) {
