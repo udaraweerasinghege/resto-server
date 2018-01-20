@@ -27,7 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: graphqlSchema }));
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+if (process.env.NODE_ENV === 'development') {
+  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

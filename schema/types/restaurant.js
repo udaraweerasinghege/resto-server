@@ -1,5 +1,3 @@
-const Comment = require('./comment');
-
 const Restaurant = `
   type Restaurant {
     id: Int!
@@ -7,6 +5,7 @@ const Restaurant = `
     name: String!    
     likes: String
     dislikes: String
+    logo: String
   }
 `;
 
