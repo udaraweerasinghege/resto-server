@@ -16,7 +16,18 @@ const resolvers = {
       catch(e) {
         throw(e);
       }
-    }
+    },
+  },
+  Mutation: {
+    createRestaurant(_, { name }) {    
+      try {
+        res = await db.query('INSERT INTO restaurants(name) VALUES(${name})');
+        return res;
+      } 
+      catch(e) {
+        throw(e);
+      }
+    },
   },
 };
 
