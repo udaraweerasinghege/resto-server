@@ -19,7 +19,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    createRestaurant(_, { name }) {    
+    createRestaurant: async (_, { name }) => {    
       try {
         res = await db.query('INSERT INTO restaurants(name) VALUES(${name})');
         return res;
@@ -31,7 +31,7 @@ const resolvers = {
   },
 };
 
-const typeDefs = [...schema.queries, ...schema.types];
+const typeDefs = [...schema.queries, ...schema.types, ...schema.mutations];
 const graphqlSchema = makeExecutableSchema({
   typeDefs, 
   resolvers

@@ -5,6 +5,7 @@ const Restaurant = `
     name: String!    
     likes: String
     dislikes: String
+    notes: String
     logo: String
   }
 `;

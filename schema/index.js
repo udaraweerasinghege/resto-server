@@ -1,6 +1,6 @@
 const types = require('./types');
 const queries = require('./queries');
-const queries = require('./mutations');
+const mutations = require('./mutations');
 
 module.exports = {
   types,
