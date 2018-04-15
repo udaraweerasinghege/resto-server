@@ -19,9 +19,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    createRestaurant: async (_, { restoName }) => {    
+    createRestaurant: async (_, { restoName, mainImage }) => {    
       try {
-        res = await db.query('INSERT INTO restaurants(name) VALUES ($1)', [restoName]);
+        res = await db.query('INSERT INTO restaurants(name, logo) VALUES ($1, $2)', [restoName, mainImage]);
         return res;
       } 
       catch(e) {
