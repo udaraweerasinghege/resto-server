@@ -22,7 +22,8 @@ const resolvers = {
     createRestaurant: async (_, { restoName, mainImage }) => {    
       try {
         res = await db.query('INSERT INTO restaurants(name, logo) VALUES ($1, $2)', [restoName, mainImage]);
-        return res;
+        res = await db.any('SELECT * FROM restaurants r LEFT JOIN comments c on r.id = c.restaurant_id ORDER BY ID DESC LIMIT 1')
+        return res[0];
       } 
       catch(e) {
         throw(e);
