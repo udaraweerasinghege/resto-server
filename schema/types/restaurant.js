@@ -7,6 +7,7 @@ const Restaurant = `
     dislikes: String
     notes: String
     logo: String
+    slug: String
   }
 `;
 
