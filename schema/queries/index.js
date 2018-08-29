@@ -1,3 +1,4 @@
 const getRestaurants = require('./getRestaurants');
+const getRestaurant = require('./getRestaurant');
 
-module.exports = [getRestaurants];
+module.exports = [getRestaurants, getRestaurant];

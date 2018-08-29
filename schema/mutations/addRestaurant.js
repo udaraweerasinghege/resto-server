@@ -1,6 +1,6 @@
 const createRestaurant = `
   type Mutation {
-    createRestaurant(restoName: String, mainImage: String): Restaurant
+    createRestaurant(restoName: String!, mainImage: String): Restaurant
   }
 `;
 
