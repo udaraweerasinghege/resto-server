@@ -4,6 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 
@@ -24,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/api', index);
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: graphqlSchema }));
 if (process.env.NODE_ENV === 'development') {
