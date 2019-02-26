@@ -1,2 +1,4 @@
 const addRestaurant = require('./addRestaurant');
-module.exports = [addRestaurant];
+const updateRestaurant = require('./updateRestaurant');
+
+module.exports = [addRestaurant, updateRestaurant];

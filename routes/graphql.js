@@ -10,16 +10,25 @@ const resolvers = {
     Query: {
         restaurants: async () => {
             try {
-                res = await db.any('SELECT * FROM restaurants r LEFT JOIN comments c on r.id = c.restaurant_id');
+                res = await db.any('SELECT * FROM restaurants');
                 return res;
             }
             catch (e) {
                 throw(e);
             }
         },
-        restaurant: async (_, {slug}) => {
+        restaurantSlug: async (_, {slug}) => {
             try {
-                res = await db.any('SELECT * FROM restaurants r LEFT JOIN comments c on r.id = c.restaurant_id WHERE slug = ($1)', [slug]);
+                res = await db.any('SELECT * FROM restaurants WHERE slug = ($1)', [slug]);
+                return res;
+            }
+            catch (e) {
+                throw(e);
+            }
+        },
+        restaurantID: async (_, {id}) => {
+            try {
+                res = await db.any('SELECT * FROM restaurants WHERE id = ($1)', [id]);
                 return res;
             }
             catch (e) {
@@ -28,16 +37,35 @@ const resolvers = {
         },
     },
     Mutation: {
-        createRestaurant: async (_, {restoName, mainImage}) => {
+        createRestaurant: async (_, {restoName, mainImage, likes, dislikes, notes, visits}) => {
             try {
-                res = await db.query('INSERT INTO restaurants(name, logo) VALUES ($1, $2)', [restoName, mainImage]);
-                res = await db.any('SELECT * FROM restaurants r LEFT JOIN comments c on r.id = c.restaurant_id ORDER BY ID DESC LIMIT 1')
+                res = await db.query('INSERT INTO restaurants(name, logo, likes, dislikes, notes, visits) VALUES ($1, $2, $3, $4, $5, $6)', [restoName, mainImage, likes, dislikes, notes, visits]);
+                res = await db.any('SELECT * FROM restaurants ORDER BY ID DESC LIMIT 1')
                 return res[0];
             }
             catch (e) {
                 throw(e);
             }
         },
+        updateRestaurant: async (_, { restoID, visits, name, likes, dislikes, notes, logo }) => { 
+            try {
+                res = await db.tx(t => {
+                    return t.none(`UPDATE restaurants
+                    SET visits=($2),
+                        name=($3),
+                        likes=($4),
+                        dislikes=($5),
+                        notes=($6),
+                        logo=($7)
+                    WHERE id = ($1)`, [restoID, visits, name, likes, dislikes, notes, logo])
+                });
+                res =  await db.one('SELECT * FROM restaurants WHERE restaurants.id = ($1)', [restoID]);
+                return res;
+            }
+            catch (e) {
+                throw(e);
+            }        
+        }
     }
 };
 
